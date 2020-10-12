@@ -11,7 +11,14 @@ public class AddressBookMain {
 		contactArray = new ArrayList<>();
 		contactMap = new HashMap<>();
 	}
-
+	public List<Contact> getcontactArray() {
+		return contactArray;
+	}
+	public Map<String,Contact> getcontactMap()
+	{
+		return contactMap;
+	}
+	
 	public void addNewContact() {
 		String firstName;
 		while(true) {
@@ -87,7 +94,7 @@ public class AddressBookMain {
 			System.out.println("\n2. Edit Contact Details");
 			System.out.println("\n3. Delete Contact Details");
 			System.out.println("\n4. Exit");
-			System.out.println("\nEnter your choice from the above list : ");
+			System.out.println("\nPlease Enter your choice from the above list : ");
 			int selection=sc.nextInt();
 			switch(selection)
 			{
