@@ -17,7 +17,7 @@ public class AddressBookMain
          this.lastName=lastName;
          this.address=address;
          this.city=city;
-         this.state=state;
+         this.state=state; 
          this.zip=zip;
          this.phoneNumber=phoneNumber;
          this.emailId=emailId;
