@@ -60,7 +60,7 @@ public class MultipleAddressBook {
 				if (adBookManager.addressMap.containsKey(name)) {
 					System.out.println("\nAddress Book already exists !!!\n");
 					continue;
-				} else {
+				}else {
 					adBookManager.addressMap.put(name, main);
 					System.out.println("\nNow you are In Address Book : " + name);
 					main.manageAddressBook();
