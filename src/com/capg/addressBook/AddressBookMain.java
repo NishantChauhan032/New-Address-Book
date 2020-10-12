@@ -1,7 +1,6 @@
 package com.capg.addressBook;
 
 import java.util.*;
-import java.util.function.Predicate;
 
 public class AddressBookMain {
 	static Scanner sc = new Scanner(System.in);
@@ -12,11 +11,26 @@ public class AddressBookMain {
 		contactArray = new ArrayList<>();
 		contactMap = new HashMap<>();
 	}
-
+	public List<Contact> getcontactArray() {
+		return contactArray;
+	}
+	public Map<String,Contact> getcontactMap()
+	{
+		return contactMap;
+	}
+	
 	public void addNewContact() {
-		
-		System.out.println("Enter First Name : ");
-	    String firstName = sc.next();		
+		String firstName;
+		while(true) {
+			System.out.println("Enter First Name : ");
+		    String checkFirstName = sc.next();	
+		    if(checkForDuplicateName(checkFirstName)) {
+		    	continue;}
+		    else {
+		    	firstName=checkFirstName;
+		    	break;
+	      }
+		}	
 		System.out.println("Enter last Name : ");
 		String lastName = sc.next();
 		System.out.println("Enter the Address : ");
@@ -32,13 +46,10 @@ public class AddressBookMain {
 		System.out.println("Enter the Email");
 		String emailId = sc.next();
 		Contact newContact = new Contact(firstName, lastName, address, city, state, zip, mobileNumber, emailId);
-		if(checkDuplicateName(newContact)) {
-			System.out.println("Contact Already Exists!");
-		}else {
 		contactArray.add(newContact);
 		contactMap.put(firstName, newContact);
 	  } 
-	}	
+	
 
 	public void printContact() {
 		System.out.println(contactArray);
@@ -83,7 +94,7 @@ public class AddressBookMain {
 			System.out.println("\n2. Edit Contact Details");
 			System.out.println("\n3. Delete Contact Details");
 			System.out.println("\n4. Exit");
-			System.out.println("\nEnter your choice from the above list : ");
+			System.out.println("\nPlease Enter your choice from the above list : ");
 			int selection=sc.nextInt();
 			switch(selection)
 			{
@@ -107,10 +118,13 @@ public class AddressBookMain {
 			}
 	     }
 	}
-	public boolean checkDuplicateName(Contact contact)
-	 {
-	Predicate<Contact> verifyDuplicateName = (c)-> c.equals(contact);
-		boolean checkDuplicacy = contactArray.stream().anyMatch(verifyDuplicateName);
-		return checkDuplicacy;	
+	public boolean checkForDuplicateName(String name) {
+		for (Contact cd : contactArray) {
+			if (cd.getFirstName().equals(name)) {
+				System.out.println("Contact with same name already exists!\n");
+				return true;
+			}
+		}
+		return false;
 	}
 }
