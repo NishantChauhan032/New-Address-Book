@@ -1,6 +1,7 @@
 package com.capg.addressBook;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 public class AddressBookMain {
 	static Scanner sc = new Scanner(System.in);
@@ -13,8 +14,9 @@ public class AddressBookMain {
 	}
 
 	public void addNewContact() {
+		
 		System.out.println("Enter First Name : ");
-		String firstName = sc.next();
+	    String firstName = sc.next();		
 		System.out.println("Enter last Name : ");
 		String lastName = sc.next();
 		System.out.println("Enter the Address : ");
@@ -30,9 +32,13 @@ public class AddressBookMain {
 		System.out.println("Enter the Email");
 		String emailId = sc.next();
 		Contact newContact = new Contact(firstName, lastName, address, city, state, zip, mobileNumber, emailId);
+		if(checkDuplicateName(newContact)) {
+			System.out.println("Contact Already Exists!");
+		}else {
 		contactArray.add(newContact);
 		contactMap.put(firstName, newContact);
-	}
+	  } 
+	}	
 
 	public void printContact() {
 		System.out.println(contactArray);
@@ -100,5 +106,11 @@ public class AddressBookMain {
 				System.out.println("Select correct input!");
 			}
 	     }
+	}
+	public boolean checkDuplicateName(Contact contact)
+	 {
+	Predicate<Contact> verifyDuplicateName = (c)-> c.equals(contact);
+		boolean checkDuplicacy = contactArray.stream().anyMatch(verifyDuplicateName);
+		return checkDuplicacy;	
 	}
 }
