@@ -47,6 +47,13 @@ public class AddressBookMain
 		String email1=sc.next();
 		obj.setEmailId(email1);
 	}
+	public void deleteContact()
+	{
+		System.out.println("Enter The First Name to delete the contact details");
+		String firstNameToBeDeleted=sc.nextLine();
+		Contact obj=contactMap.get(firstNameToBeDeleted);
+		contactArray.remove(obj);
+	}
 	public static void main(String args[])
 	{
 	System.out.println("Enter FirstName,Last Name,Address,City,State,Zip,Mobile Number,Email ID (In mentioned order) :");
@@ -58,11 +65,12 @@ public class AddressBookMain
 	String zip=sc.next();
 	String mobileNumber=sc.next();
 	String email=sc.next();
-	AddressBookMain Contact1=new AddressBookMain();
-	Contact1.addNewContact(fname,lname,newAddress,newCity,newState,zip,mobileNumber,email);
-	Contact1.printContact();
-	Contact1.editContact();
-	System.out.println("Contact Details After Editing : ");
-	Contact1.printContact();
+	AddressBookMain addContact=new AddressBookMain();
+	addContact.addNewContact(fname,lname,newAddress,newCity,newState,zip,mobileNumber,email);
+	addContact.printContact();
+	addContact.editContact();
+	addContact.deleteContact();
+	System.out.println("Contacts remained after editing : ");
+	addContact.printContact();
 	}
 }
