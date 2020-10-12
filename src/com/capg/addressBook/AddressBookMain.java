@@ -68,17 +68,37 @@ public class AddressBookMain {
 		Contact obj = contactMap.get(firstNameToBeDeleted);
 		contactArray.remove(obj);
 	}
-
-	public static void main(String args[]) {
-		AddressBookMain contact = new AddressBookMain();
-		while (true) {
-			System.out.println("Do You Want to Add New Contact(Y/N) : ");
-			char choice = sc.next().charAt(0);
-			if (choice == 'Y') {
-				contact.addNewContact();
-				contact.printContact();
-			} else
-				break;
-		}
+	public void manageAddressBook()
+	{
+		boolean check=true;
+		while (check) 
+		{
+			System.out.println("\n1. Add Contact Details");
+			System.out.println("\n2. Edit Contact Details");
+			System.out.println("\n3. Delete Contact Details");
+			System.out.println("\n4. Exit");
+			System.out.println("\nEnter your choice from the above list : ");
+			int selection=sc.nextInt();
+			switch(selection)
+			{
+			case 1:addNewContact();
+			break;
+			case 2:if(contactArray.size()==0)
+					System.out.println("Sorry,No contact in the list. Please add some contacts to perform this task!");
+					else
+				    editContact();
+			break;
+			case 3:if(contactArray.size()==0)
+					System.out.println("Sorry,No contact in the list. Please add some contacts to perform this task!");
+					else
+						deleteContact();
+			break;
+			case 4:System.out.println("Exit");
+				   check = false;
+			break;
+			default :
+				System.out.println("Select correct input!");
+			}
+	     }
 	}
 }
