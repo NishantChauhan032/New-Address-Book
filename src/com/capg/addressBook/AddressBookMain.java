@@ -10,17 +10,19 @@ import java.util.stream.Collectors;
 public class AddressBookMain 
 {
 	static Scanner sc=new Scanner(System.in);
-	static ArrayList<Contact> contactArrayList;
-	private Map<String,Contact> nameToContactMap;
-	public Map<String, List<Contact>> cityToContactMap;
+	static ArrayList<Contact> myContactArrayList;
+	
+	public Map<String,Contact> nameToContactMap;
 	public Map<String, List<Contact>> stateToContactMap;
+	public Map<String, List<Contact>> cityToContactMap;
+	
 	public AddressBookMain()
 	{
-		contactArrayList=new ArrayList<>();
-		this.nameToContactMap = new LinkedHashMap<String, Contact>();
+		myContactArrayList=new ArrayList<>();
+		nameToContactMap = new LinkedHashMap<String, Contact>();
 	}
 	public List<Contact> getcontactArray() {
-		return contactArrayList;
+		return myContactArrayList;
 	}
 	public Map<String,Contact> getcontactMap()
 	{
@@ -41,48 +43,49 @@ public class AddressBookMain
 		else
 			break;
 		}
-		System.out.println("Enter the Address");
+		System.out.println("Enter Address");
 		String address=sc.next();
-		System.out.println("Enter the City");
+		System.out.println("Enter City");
 		String city=sc.next();
-		System.out.println("Enter the State");
+		System.out.println("Enter State");
 		String state=sc.next();
-		System.out.println("Enter the Pincode");
+		System.out.println("Enter Pincode");
 		int pinCode=sc.nextInt();
-		System.out.println("Enter the Number");
+		System.out.println("Enter phone Number");
 		long phoneNumber=sc.nextLong();
-		System.out.println("Enter the Email");
+		System.out.println("Enter Email ID");
 		String emailId=sc.next();
-		Contact newcontact=new Contact(firstName,lastName,address,city,state,pinCode,phoneNumber,emailId);
-		this.contactArrayList.add(newcontact);
+		Contact addNewContact = new Contact(firstName,lastName,address,city,state,pinCode,phoneNumber,emailId);
+		myContactArrayList.add(addNewContact);
+		
 		String name=firstName+" "+lastName;
-		this.nameToContactMap.put(name,newcontact);
+		nameToContactMap.put(name,addNewContact);
 	}
 	public void printContacts()
 	{
-		System.out.println(contactArrayList);
+		System.out.println(myContactArrayList);
 	}
 	public void editContact()
 	{
-		System.out.println("Enter The First Name to edit the contact details");
+		System.out.println("Enter First Name of contact to edit the contact details");
 		String firstName=sc.next();
-		System.out.println("Enter The last Name to edit the contact details");
+		System.out.println("Enter last Name of contact to edit the contact details");
 		String lastName=sc.next();
 		String name=firstName+" "+lastName;
-		Contact editedObject=nameToContactMap.get(name);
-				System.out.print("Enter address,city,state,pincode,phonenumber,email");
-				String ad=sc.next();
-				editedObject.setAddress(ad);
-				String ci=sc.next();
-				editedObject.setCity(ci);
-				String st=sc.next();
-				editedObject.setState(st);
-				int pin=sc.nextInt();
-				editedObject.setPinCode(pin);
-				long num=sc.nextLong();
-				editedObject.setPhoneNumber(num);
-				String em=sc.next();
-				editedObject.setEmailId(em);
+		Contact editedContactObject = nameToContactMap.get(name);
+				System.out.print("Enter Address,City,State,Pincode,Phone Number & Email ID ");
+				String editedAddress=sc.next();
+				editedContactObject.setAddress(editedAddress);
+				String editedCity=sc.next();
+				editedContactObject.setCity(editedCity);
+				String editedState=sc.next();
+				editedContactObject.setState(editedState);
+				int editedPin=sc.nextInt();
+				editedContactObject.setPinCode(editedPin);
+				long editedNumber=sc.nextLong();
+				editedContactObject.setPhoneNumber(editedNumber);
+				String editedEmail=sc.next();
+				editedContactObject.setEmailId(editedEmail);
 	}
 	public void deleteContactDetails() 
 	{
@@ -92,7 +95,7 @@ public class AddressBookMain
 		String lastName=sc.next();
 			String name=firstName+" "+lastName;
 			Contact object=nameToContactMap.get(name);
-			contactArrayList.remove(object);
+			myContactArrayList.remove(object);
 			nameToContactMap.remove(name);
 			System.out.println("Contact deleted");
 		
@@ -100,8 +103,8 @@ public class AddressBookMain
 	/*UC7*/
 	public boolean checkForDuplicate(String firstname, String lastname) 
 	{
-		if (contactArrayList.stream().anyMatch(obj -> obj.getFirstName().equals(firstname))
-				&& contactArrayList.stream().anyMatch(obj -> obj.getLastName().equals(lastname))) 
+		if (myContactArrayList.stream().anyMatch(obj -> obj.getFirstName().equals(firstname))
+				&& myContactArrayList.stream().anyMatch(obj -> obj.getLastName().equals(lastname))) 
 		{
 			System.out.println("This contact already exists, try again!!");
 			return true;
@@ -112,29 +115,29 @@ public class AddressBookMain
 	/*UC11*/
 	public void sortByName()
 	{
-	List<Contact> sortedList = contactArrayList.stream()
+	List<Contact> sortByNameList = myContactArrayList.stream()
 	.sorted(Comparator.comparing(Contact::getFirstName))
 	.collect(Collectors.toList());
-	sortedList.forEach(System.out::println);
+	sortByNameList.forEach(System.out::println);
 	}
 	/*UC12*/
 	public void sortByCity()
 	{
-	List<Contact> sortedList = contactArrayList.stream()
+	List<Contact> sortByCityList = myContactArrayList.stream()
 	.sorted(Comparator.comparing(Contact::getCity))
 	.collect(Collectors.toList());
-	sortedList.forEach(System.out::println);
+	sortByCityList.forEach(System.out::println);
 	}
 	public void sortByState()
 	{
-	List<Contact> sortedList = contactArrayList.stream()
+	List<Contact> sortByStateList = myContactArrayList.stream()
 	.sorted(Comparator.comparing(Contact::getState))
 	.collect(Collectors.toList());
-	sortedList.forEach(System.out::println);
+	sortByStateList.forEach(System.out::println);
 	}
 	public void sortByZip()
 	{
-	List<Contact> sortedList = contactArrayList.stream()
+	List<Contact> sortByZipList = myContactArrayList.stream()
 	.sorted(Comparator.comparingInt(Contact::getPinCode))
 	.collect(Collectors.toList());
 	}
@@ -143,24 +146,26 @@ public class AddressBookMain
 		boolean check=true;
 		while (check==true) 
 		{
-			System.out.println("\n1. Add Contact Details");
-			System.out.println("\n2. Edit Contact Details");
-			System.out.println("\n3. Delete Contact Details");
-			System.out.println("\n4. Show Contact details");
-			System.out.println("\n5. Sort details by name");
-			System.out.println("\n6. Exit");
-			System.out.println("\nEnter your choice");
+			System.out.println("1. Add Contact Details");
+			System.out.println("2. Edit Contact Details");
+			System.out.println("3. Delete Contact Details");
+			System.out.println("4. Show Contact details");
+			System.out.println("5. Sort details by name");
+			System.out.println("6. Sort details by State");
+			System.out.println("7. Sort details by PinCode");
+			System.out.println("8. Exit");
+			System.out.println("Enter your choice");
 			int choice=sc.nextInt();
 			switch(choice)
 			{
 			case 1:addNewContact();
 			break;
-			case 2:if(contactArrayList.size()==0)
+			case 2:if(myContactArrayList.size()==0)
 					System.out.println("Plese Enter contacts");
 					else
 				    editContact();
 			break;
-			case 3:if(contactArrayList.size()==0)
+			case 3:if(myContactArrayList.size()==0)
 					System.out.println("Plese Enter contacts");
 					else
 						deleteContactDetails();
