@@ -18,28 +18,27 @@ public class AddressBookManagement
 	
 	public static void addNewAddressBook()
 	{
-		AddressBookMain adBookMainObject=new AddressBookMain();
+		AddressBookMain addressBookMainObject=new AddressBookMain();
 		System.out.println("Enter a unique name");
 		String name=sc.next();
-		adBookMainObject.maintainAddressBook();
-		addressMap.put(name,adBookMainObject);
+		addressBookMainObject.maintainAddressBook();
+		addressMap.put(name,addressBookMainObject);
+	}
+	public static void showContactGroupedByState() {
+		Set<String> stateList = stateAndContactMap.keySet();
+		for(String state : stateList) {
+			System.out.println("Contact Entries for STATE: " + state);
+			searchPersonInAddressBook(state);
+		}
 	}
 	public static void showContactGroupedByCity() {
 		Set<String> cityList = cityAndContactMap.keySet();
 		for(String city : cityList) {
 			System.out.println("Contact Entries for CITY: " + city);
-			searchPersonInBook(city);
+			searchPersonInAddressBook(city);
 		}
 	}
-
-	public static void showContactGroupedByState() {
-		Set<String> stateList = stateAndContactMap.keySet();
-		for(String state : stateList) {
-			System.out.println("Contact Entries for STATE: " + state);
-			searchPersonInBook(state);
-		}
-	}
-	public static void searchPersonInBook(String searchIn)
+	public static void searchPersonInAddressBook(String searchIn)
 	{
 		Predicate<Contact> search = n -> n.getFirstName().equals(searchIn) ? true : false;
 		Consumer<Contact> display = n -> System.out.println(n);
@@ -47,15 +46,15 @@ public class AddressBookManagement
 			v.getcontactArray().stream().filter(search).forEach(display);
 		});
 	}
-	public static void countByCity() {
+	public static void countContactsByCity() {
 		Set<String> cityList = cityAndContactMap.keySet();
 		for(String cityName : cityList) {
 			Contact contactNumber = cityAndContactMap.get(cityName);
-			System.out.println("No of contact entries for CITY " + cityName + " " + ((Map<String, AddressBookMain>) contactNumber).size());
+			System.out.println("No of contact entries for the city  " + cityName + " " + ((Map<String, AddressBookMain>) contactNumber).size());
 		}
 	}
 
-	public static void countByState() {
+	public static void countContactsByState() {
 		Set<String> stateList = stateAndContactMap.keySet();
 		for(String stateName : stateList) {
 			Contact contactNumber = stateAndContactMap.get(stateName);
@@ -98,15 +97,15 @@ public class AddressBookManagement
 		case 2:
 			System.out.println("Enter city or state to search a person");
 			String search = sc.next();
-			addressBookManager.searchPersonInBook(search);
+			addressBookManager.searchPersonInAddressBook(search);
 			break;
 		case 3:showContactGroupedByCity();
 			break;
 		case 4:showContactGroupedByState();
 			break;
-		case 5:countByCity();
+		case 5:countContactsByCity();
 			break;
-		case 6:countByState();
+		case 6:countContactsByState();
 			break;
 		case 7:
 			System.exit(0);
