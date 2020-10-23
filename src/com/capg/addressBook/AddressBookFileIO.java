@@ -21,7 +21,7 @@ public class AddressBookFileIO {
 		{
 			e.printStackTrace();
 		}
-	}
+	} 
 	public List<Contact> readContactFile() {
 		List<Contact> listOfContacts = new ArrayList<>();
 		try {
